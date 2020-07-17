@@ -65,9 +65,6 @@ struct Sys {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cli = Opts::from_args();
 
-    // let current_weather = get_weather(&cli.city, &cli.unit);
-    // println!("{:?}", current_weather);
-
     // let final_url = format!("https://api.openweathermap.org/data/2.5/weather?q=bordeaux&appid=cb3dcd4fe2e3b8745cb772d9ff4c34f2&unit=metric");
     let final_url = format!("https://api.openweathermap.org/data/2.5/weather?q={}&appid=cb3dcd4fe2e3b8745cb772d9ff4c34f2&units={}", &cli.city, &cli.unit);
     let res = reqwest::blocking::get(&final_url)?.text()?;
