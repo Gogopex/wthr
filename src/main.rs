@@ -19,11 +19,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // process the string into JSON and map it to struct Weather
     let _current_weather = match wthr::process_response(&res) {
-        Ok(w) => println!(
-            "The weather in {} is {}°C. Feels like {}°C, nice !",
-            w.name, w.main.temp, w.main.feels_like
-        ),
-        Err(e) => println!("Boooh! You suck! Here's the error: {}", e),
+        Ok(w) => wthr::format_print(w),
+        Err(e) => wthr::format_error(e.to_string()),
     };
 
     Ok(())
