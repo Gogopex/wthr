@@ -12,7 +12,7 @@ pub struct WeatherForecast {
     pub sys: Sys,
     pub timezone: i32,
     pub visibility: i32,
-    pub dt_txt: String, 
+    pub dt_txt: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
