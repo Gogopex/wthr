@@ -16,5 +16,9 @@
 - Display the remaining API calls for the hour, linked to the API key, with an argument "-r (--remaining)"
 
 # 0.4
+- User settings to save whether to use metric or imperial unit 
+	- maybe smth like -c (--config) [param=value]
+
+# 0.5
 - Print out ASCII art / emojis depending on the weather
 	- this should make use of the information received by the openweather API to have as much variance in the ASCII art as possible
