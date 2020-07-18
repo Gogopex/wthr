@@ -1,6 +1,21 @@
 use serde_derive::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct WeatherForecast {
+    pub clouds: Cloud,
+    pub cod: i32,
+    pub coord: Coord,
+    pub dt: i32,
+    pub id: i32,
+    pub main: Main,
+    pub name: String,
+    pub sys: Sys,
+    pub timezone: i32,
+    pub visibility: i32,
+    pub dt_txt: String, 
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Weather {
     pub base: String,
     pub clouds: Cloud,
@@ -16,6 +31,20 @@ pub struct Weather {
     // weather: Vec<String>,
     // wind: Vec<i32>,
 }
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Forecast {
+    // pub city: Vec<City>,
+    // pub cnt: i32,
+    // pub cod: String,
+    pub list: Option<Vec<WeatherForecast>>,
+    // pub message: i32,
+}
+
+// #[derive(Serialize, Deserialize, Debug)]
+// pub struct City {
+//     country: String
+// }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Cloud {
@@ -47,8 +76,14 @@ pub struct Sys {
 }
 
 pub fn process_response(data: &str) -> Result<Weather, Box<dyn std::error::Error>> {
-    let v: Weather = serde_json::from_str(&data)?;
-    Ok(v)
+    let w: Weather = serde_json::from_str(&data)?;
+    Ok(w)
+}
+
+pub fn process_response_forecast(data: &str) -> Result<Forecast, Box<dyn std::error::Error>> {
+    let f: Forecast = serde_json::from_str(&data)?;
+    println!("{:?}", f);
+    Ok(f)
 }
 
 pub fn format_print(w: Weather) {
@@ -56,25 +91,36 @@ pub fn format_print(w: Weather) {
     match w.main.feels_like {
         v if v <= 0.0 => {
             temp_message = "Freezing!";
-        },
+        }
         v if v <= 9.9 => {
             temp_message = "Cover up!";
-        },
+        }
         v if v <= 14.9 => {
             temp_message = "Chilly!";
-        },
+        }
         v if v <= 21.9 => {
             temp_message = "Nice!";
-        },
+        }
         v if v <= 31.9 => {
             temp_message = "Sunglasses out!";
-        },
-        _ => println!("Error: what kind of temperature is this?")
+        }
+        _ => println!("Error: what kind of temperature is this?"),
     }
     println!(
         "The weather in {} is {}°C. Feels like {}°C! {}",
         w.name, w.main.temp, w.main.feels_like, temp_message
     )
+}
+
+pub fn format_print_forecast(f: Forecast) {
+    if let Some(vw) = f.list {
+        for w in vw {
+            println!(
+                "The weather in {} is {}°C. Feels like {}°C!",
+                w.name, w.main.temp, w.main.feels_like
+            );
+        }
+    }
 }
 
 pub fn format_error(e: String) {
