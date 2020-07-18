@@ -2,15 +2,9 @@ use serde_derive::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct WeatherForecast {
-    pub clouds: Cloud,
-    pub cod: i32,
-    pub coord: Coord,
     pub dt: i32,
-    pub id: i32,
     pub main: Main,
-    pub name: String,
-    pub sys: Sys,
-    pub timezone: i32,
+    pub clouds: Cloud,
     pub visibility: i32,
     pub dt_txt: String,
 }
@@ -76,14 +70,11 @@ pub struct Sys {
 }
 
 pub fn process_response(data: &str) -> Result<Weather, Box<dyn std::error::Error>> {
-    let w: Weather = serde_json::from_str(&data)?;
-    Ok(w)
+    Ok(serde_json::from_str(&data)?)
 }
 
 pub fn process_response_forecast(data: &str) -> Result<Forecast, Box<dyn std::error::Error>> {
-    let f: Forecast = serde_json::from_str(&data)?;
-    println!("{:?}", f);
-    Ok(f)
+    Ok(serde_json::from_str(&data)?)
 }
 
 pub fn format_print(w: Weather) {
@@ -113,13 +104,15 @@ pub fn format_print(w: Weather) {
 }
 
 pub fn format_print_forecast(f: Forecast) {
-    if let Some(vw) = f.list {
-        for w in vw {
-            println!(
-                "The weather in {} is {}°C. Feels like {}°C!",
-                w.name, w.main.temp, w.main.feels_like
-            );
-        }
+    let vec_w = match f.list {
+        Some(it) => it,
+        _ => return,
+    };
+    for w in vec_w {
+        println!(
+            "The weather for {} will be {}°C. Feels like {}°C!",
+            w.dt_txt, w.main.temp, w.main.feels_like
+        );
     }
 }
 
