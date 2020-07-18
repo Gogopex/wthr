@@ -1,5 +1,5 @@
 # Roadmap for Wthr 
-### A simple Rust command line that displays weather information for a given city. 
+### A simple Rust command line utility that displays weather information for a given city. 
 
 
 # 0.1
