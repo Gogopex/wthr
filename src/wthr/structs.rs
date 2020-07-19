@@ -22,7 +22,7 @@ pub struct Weather {
     pub sys: Sys,
     pub timezone: i32,
     pub visibility: i32,
-    // weather: Vec<String>,
+    // pub weather: Vec<Description>,
     // wind: Vec<i32>,
 }
 
@@ -68,3 +68,18 @@ pub struct Sys {
     pub sunrise: i32,
     pub sunset: i32,
 }
+
+// #[derive(Serialize, Deserialize, Debug)]
+// pub struct Description {
+//     pub description: String,
+//     pub main: String
+// }
+
+// impl Description {
+//     pub fn get_description(self) -> String {
+//         self.description
+//     }   
+//     pub fn get_name(self) -> String {
+//         self.main
+//     }    
+// }

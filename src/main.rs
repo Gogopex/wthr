@@ -6,8 +6,8 @@ use wthr::{format_error, format_print, format_print_forecast};
 #[derive(StructOpt, Debug)]
 #[structopt(
     name = "wthr",
-    about = "A small CLI utility to give you the weather",
-    after_help = "Feel free to report any issue you find at: https://github.com/Gogopex/wthr/"
+    about = "A small CLI utility that retrieves and display the weather for a given city using the OpenWeather API",
+    after_help = "Feel free to report any issue you find here: https://github.com/Gogopex/wthr/issues"
 )]
 struct Opts {
     city: String,
@@ -40,7 +40,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         };
     } else {
         let _current_weather = match wthr::process_response(&res) {
-            Ok(w) => format_print(w),
+            Ok(w) => format_print(w, String::from(&cli.unit)),
             Err(e) => format_error(e.to_string()),
         };
     }
