@@ -9,13 +9,14 @@
 # 0.2
 - ~~Better formatting of the current weather~~
 
-# Coming up
-> ## 0.3
-- Improve error handling (API calls, etc..)
-
->## 0.4
-- Give the weather for the x next days using a argument format similar to "-n x" (where x is the number of days for the forecast)
+>## 0.3
+- ~~Give the weather for the x next days using a argument format similar to "-n x" (where x is the number of days for the forecast)
 	- Anything above 5 days gets limited to 5 days with a warning message
+
+# Coming up
+> ## 0.4
+- Improve error handling (API calls, wrong city etc..)
+- improve the -f option (take avg of the temp for a given day instead of first one...)
 
 >## 0.5
 - User settings to save whether to use metric or imperial unit 
