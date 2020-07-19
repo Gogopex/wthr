@@ -26,6 +26,10 @@ struct Opts {
     forecast: bool,
 }
 
+// wthr bordeaux
+// defaults to unit=metric, forecast=false
+
+// wthr "new york city" -u=kelvin
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cli = Opts::from_args();
 
