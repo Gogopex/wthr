@@ -11,35 +11,7 @@ pub fn process_response_forecast(data: &str) -> Result<Forecast, Box<dyn std::er
     Ok(serde_json::from_str(&data)?)
 }
 
-// pub fn celsius_to_fahrenheit(tmp_c: f32, m: &str) -> f32 {
-//     if "imperial" == m {
-//         tmp_c * 1.8 + 32.0
-//     } else {
-//         tmp_c
-//     }
-// }
-
 pub fn format_print(w: Weather, m: String) {
-    // let mut temp_message = "";
-    // match w.main.feels_like {
-    //     v if v <= celsius_to_fahrenheit(0.0, &m) => {
-    //         temp_message = "Freezing! 🥶";
-    //     }
-    //     v if v <= celsius_to_fahrenheit(9.9, &m) => {
-    //         temp_message = "Cover up! 🥼";
-    //     }
-    //     v if v <= celsius_to_fahrenheit(14.9, &m) => {
-    //         temp_message = "Chilly!";
-    //     }
-    //     v if v <= celsius_to_fahrenheit(21.9, &m) => {
-    //         temp_message = "Nice! ☀️";
-    //     }
-    //     v if v <= celsius_to_fahrenheit(31.9, &m) => {
-    //         temp_message = "Sunglasses out! 🕶";
-    //     }
-    //     _ => println!("Error: what kind of temperature is this? 🥵"),
-    // }
-
     let symb = if m == "imperial" { "°F" } else { "°C" };
 
     let mapping_desc = mapping_desc();
