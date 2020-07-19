@@ -1,15 +1,28 @@
 mod wthr;
 
 use structopt::StructOpt;
-use wthr::{format_print_forecast, format_print, format_error};
+use wthr::{format_error, format_print, format_print_forecast};
 
 #[derive(StructOpt, Debug)]
-#[structopt(name = "wthr", about = "A small CLI utility to give you the weather", after_help="Feel free to report any issue you find at: https://github.com/Gogopex/wthr/")]
+#[structopt(
+    name = "wthr",
+    about = "A small CLI utility to give you the weather",
+    after_help = "Feel free to report any issue you find at: https://github.com/Gogopex/wthr/"
+)]
 struct Opts {
     city: String,
-    #[structopt(short = "u", long = "unit", default_value = "metric", help="Other possible units include <imperial>, <kelvin>")]
+    #[structopt(
+        short = "u",
+        long = "unit",
+        default_value = "metric",
+        help = "Other possible units include <imperial>, <kelvin>"
+    )]
     unit: String,
-    #[structopt(short, long, help="Outputs a forecast of the weather for the next 5 days")]
+    #[structopt(
+        short,
+        long,
+        help = "Outputs a forecast of the weather for the next 5 days"
+    )]
     forecast: bool,
 }
 
