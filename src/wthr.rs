@@ -3,6 +3,7 @@ mod structs;
 use chrono::prelude::*;
 use std::collections::{BTreeMap, HashMap};
 use structs::{Forecast, Weather};
+// use ansi_term::Colour::{Red, Blue};
 
 pub fn process_response(data: &str) -> Result<Weather, Box<dyn std::error::Error>> {
     Ok(serde_json::from_str(&data)?)
@@ -29,7 +30,9 @@ pub fn format_print(w: Weather, m: String) {
     )
 }
 
-pub fn format_print_forecast(f: Forecast) {
+pub fn format_print_forecast(f: Forecast, m: String) {
+    let symb = if m == "imperial" { "°F" } else { "°C" };
+
     let vec_w = match f.list {
         Some(it) => it,
         _ => return,
@@ -44,14 +47,13 @@ pub fn format_print_forecast(f: Forecast) {
         forecast_btm.insert(dt, temp);
     }
 
-    let mut tt = HashMap::new();
-
+    let mut forecast_hm = HashMap::new();
     for key in forecast_btm.keys() {
         let current_day = key.weekday().number_from_monday();
         match current_day {
             1..=7 => {
                 let min_max = get_avg_temp(&forecast_btm, &current_day);
-                tt.insert(key.weekday().to_string(), min_max);
+                forecast_hm.insert(key.weekday().to_string(), min_max);
             }
             _ => {
                 println!("Error: The current day could not be found");
@@ -59,7 +61,13 @@ pub fn format_print_forecast(f: Forecast) {
         };
     }
 
-    println!("{:?}  ", tt);
+    let mut output_string = String::new();
+    for (k, v) in &forecast_hm {
+        let format = format!("{0}: {1}{2}/{3}{2} ", k, v.0, symb, v.1);
+        output_string.push_str(&format);
+    }
+
+    println!("{:?}", output_string);
 }
 
 pub fn format_error(e: String) {

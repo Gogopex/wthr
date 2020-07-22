@@ -35,7 +35,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     if mode == "forecast" {
         match wthr::process_response_forecast(&res) {
-            Ok(f) => format_print_forecast(f),
+            Ok(f) => format_print_forecast(f, String::from(&cli.unit)),
             Err(e) => format_error(e.to_string()),
         };
     } else {
