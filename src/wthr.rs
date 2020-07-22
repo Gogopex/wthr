@@ -1,7 +1,8 @@
 mod structs;
+
 use chrono::prelude::*;
 use std::collections::{BTreeMap, HashMap};
-use structs::*;
+use structs::{Forecast, Weather};
 
 pub fn process_response(data: &str) -> Result<Weather, Box<dyn std::error::Error>> {
     Ok(serde_json::from_str(&data)?)
@@ -15,8 +16,9 @@ pub fn format_print(w: Weather, m: String) {
     let symb = if m == "imperial" { "°F" } else { "°C" };
 
     let mapping_desc = mapping_desc();
-    let description = &w.weather.last().unwrap().description as &str;
+    let description = &w.weather.first().unwrap().description as &str;
     let emoji = mapping_desc[description];
+
     println!(
         "{0} - {1} -- Current temperature is {2}{3}. Feels like {4}{3}!",
         description,
@@ -33,19 +35,31 @@ pub fn format_print_forecast(f: Forecast) {
         _ => return,
     };
 
-    let mapping_wd = mapping_wd();
-    let mut forecast_hm = BTreeMap::new();
+    let mut forecast_btm = BTreeMap::new();
     for w in vec_w {
+        let temp = w.main.temp.round() as u32;
         let dt = Utc
             .datetime_from_str(&w.dt_txt, "%Y-%m-%d %H:%M:%S")
             .unwrap();
-        forecast_hm.insert(dt.weekday().number_from_monday(), w.main.temp.round());
+        forecast_btm.insert(dt, temp);
     }
 
-    for k in forecast_hm.keys() {
-        let forecast_string = format!("{}: {}°C", mapping_wd[k], forecast_hm[k].to_string());
-        println!("{}", forecast_string);
+    let mut tt = HashMap::new();
+
+    for key in forecast_btm.keys() {
+        let current_day = key.weekday().number_from_monday();
+        match current_day {
+            1..=7 => {
+                let min_max = get_avg_temp(&forecast_btm, &current_day);
+                tt.insert(key.weekday().to_string(), min_max);
+            }
+            _ => {
+                println!("Error: The current day could not be found");
+            }
+        };
     }
+
+    println!("{:?}  ", tt);
 }
 
 pub fn format_error(e: String) {
@@ -67,15 +81,17 @@ pub fn mapping_desc() -> HashMap<&'static str, &'static str> {
     mapping_desc
 }
 
-pub fn mapping_wd() -> HashMap<u32, &'static str> {
-    let mut mapping_wd = HashMap::new();
-    mapping_wd.insert(1, "Mon");
-    mapping_wd.insert(2, "Tue");
-    mapping_wd.insert(3, "Wed");
-    mapping_wd.insert(4, "Thur");
-    mapping_wd.insert(5, "Fri");
-    mapping_wd.insert(6, "Sat");
-    mapping_wd.insert(7, "Sun");
+fn get_avg_temp(forecasts: &BTreeMap<DateTime<Utc>, u32>, current_day: &u32) -> (u32, u32) {
+    let to_avg = &mut Vec::new();
 
-    mapping_wd
+    for (k, v) in forecasts {
+        if k.weekday().number_from_monday() == *current_day {
+            to_avg.push(v);
+        }
+    }
+
+    let max = to_avg.iter_mut().max().unwrap().to_owned();
+    let min = to_avg.iter_mut().min().unwrap().to_owned();
+
+    (min, max)
 }
