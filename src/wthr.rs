@@ -3,7 +3,7 @@ mod structs;
 use chrono::prelude::*;
 use std::collections::{BTreeMap, HashMap};
 use structs::{Forecast, Weather};
-// use ansi_term::Colour::{Red, Blue};
+use ansi_term::Colour::{Red, Cyan};
 
 pub fn process_response(data: &str) -> Result<Weather, Box<dyn std::error::Error>> {
     Ok(serde_json::from_str(&data)?)
@@ -61,13 +61,15 @@ pub fn format_print_forecast(f: Forecast, m: String) {
         };
     }
 
+
     let mut output_string = String::new();
     for (k, v) in &forecast_hm {
-        let format = format!("{0}: {1}{2}/{3}{2} ", k, v.0, symb, v.1);
+        let format = format!("{0}: {1}{2}/{3}{2} ", k, Cyan.paint(v.0.to_string()), symb, Red.paint(v.1.to_string()));
         output_string.push_str(&format);
     }
 
-    println!("{:?}", output_string);
+
+    println!("{}", output_string);
 }
 
 pub fn format_error(e: String) {
@@ -76,14 +78,14 @@ pub fn format_error(e: String) {
 
 pub fn mapping_desc() -> HashMap<&'static str, &'static str> {
     let mut mapping_desc = HashMap::new();
-    mapping_desc.insert("clear sky", "😎");
-    mapping_desc.insert("few clouds", "⛅");
-    mapping_desc.insert("scattered clouds", "🌥");
-    mapping_desc.insert("broken clouds", "🌥");
-    mapping_desc.insert("shower rain", "🌦");
-    mapping_desc.insert("rain", "🌧");
-    mapping_desc.insert("thunderstorm", "⛈");
-    mapping_desc.insert("snow", "🌨");
+    mapping_desc.insert("clear sky", "😎 ");
+    mapping_desc.insert("few clouds", "⛅ ");
+    mapping_desc.insert("scattered clouds", "🌥 ");
+    mapping_desc.insert("broken clouds", "🌥 ");
+    mapping_desc.insert("shower rain", " 🌦");
+    mapping_desc.insert("rain", "🌧 ");
+    mapping_desc.insert("thunderstorm", "⛈ ");
+    mapping_desc.insert("snow", "🌨 ");
     mapping_desc.insert("mist", "🌫 ");
 
     mapping_desc
