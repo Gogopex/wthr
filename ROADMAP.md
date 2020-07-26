@@ -2,9 +2,8 @@
 ### A simple Rust command line utility that displays weather information for a given city. 
 
 # Coming up
-- Improve error handling
-- Improve output formatting using "colored" crate
-- User settings to save whether to use metric or imperial unit 
+- Improve error handling (too many .unwrap())
+- Find way to remember user settings, so that a user can simply type `wthr` once having entered a favority city
 	- e.g: -c (---config) [param=value]
 - Print out ASCII art / emojis depending on the weather
 	- this should make use of the information received by the openweather API to have as much variety in the ASCII art as possible
@@ -23,3 +22,4 @@
 ## 0.3.5
 - ~~basic emoji support~~
 - ~~Improve the -f option (take avg of the temp for a given day instead of first one...)~~
+- ~~Improve output formatting using "colored" crate ~~

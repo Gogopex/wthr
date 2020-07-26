@@ -4,6 +4,7 @@ use chrono::prelude::*;
 use std::collections::{BTreeMap, HashMap};
 use structs::{Forecast, Weather};
 use ansi_term::Colour::{Red, Cyan};
+use inflector::Inflector;
 
 pub fn process_response(data: &str) -> Result<Weather, Box<dyn std::error::Error>> {
     Ok(serde_json::from_str(&data)?)
@@ -22,7 +23,7 @@ pub fn format_print(w: Weather, m: String) {
 
     println!(
         "{0} - {1} -- Current temperature is {2}{3}. Feels like {4}{3}!",
-        description,
+        description.to_title_case(),
         emoji,
         w.main.temp.round(),
         symb,

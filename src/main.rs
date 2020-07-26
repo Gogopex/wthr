@@ -11,6 +11,7 @@ use wthr::{format_error, format_print, format_print_forecast};
 )]
 struct Opts {
     city: String,
+
     #[structopt(
         short = "u",
         long = "unit",
@@ -18,10 +19,11 @@ struct Opts {
         help = "Other possible units include <imperial>, <kelvin>"
     )]
     unit: String,
+    
     #[structopt(
         short,
         long,
-        help = "Outputs a forecast of the weather for the next 5 days"
+        help = "Outputs a forecast of the weather for the next 5 days for a given city"
     )]
     forecast: bool,
 }

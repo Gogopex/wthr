@@ -1,6 +1,6 @@
 [package]
 name = "wthr"
-version = "0.1.0"
+version = "0.3.5"
 authors = ["ludovic.pouey <gogopex@gmail.com>"]
 edition = "2018"
 
@@ -15,3 +15,4 @@ serde_derive="1.0.114"
 tokio = "0.2.21"
 chrono = "0.4"
 ansi_term = "0.12.1"
+Inflector = "0.11.4"
