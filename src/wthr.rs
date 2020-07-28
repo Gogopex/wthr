@@ -93,6 +93,7 @@ pub fn mapping_desc() -> HashMap<&'static str, &'static str> {
     let mut mapping_desc = HashMap::new();
     mapping_desc.insert("clear sky", "😎 ");
     mapping_desc.insert("few clouds", "⛅ ");
+    mapping_desc.insert("overcast clouds", "☁️ ");
     mapping_desc.insert("scattered clouds", "🌥 ");
     mapping_desc.insert("broken clouds", "🌥 ");
     mapping_desc.insert("shower rain", " 🌦");
