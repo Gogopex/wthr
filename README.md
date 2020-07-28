@@ -1,12 +1,8 @@
 # wthr
 A simple Rust command line that displays weather information for a given city. 
 
-## About
-A small project to mess around with Rust, Serde, and StructOpt. It doesn't do much, and isn't very well made.
-
-
 ## Installation
-I'm not sure this deserves to be uploaded as a crate, so for now you can:
+I'm not sure this deserves to be uploaded as a crate or as a package somewhere, so for now you can:
 ```
 git clone https://github.com/Gogopex/wthr.git
 cd wthr
