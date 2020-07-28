@@ -23,5 +23,5 @@ $ wthr philadelphia -u=imperial
 $ Broken Clouds - 🌥  -- Current temperature is 83°F. Feels like 90°F!
 ```
 
-## Help
-![Output of wthr --help](https://i.imgur.com/OzmW6kI.png)
+## Demo
+![Usage of wthr](https://i.imgur.com/lTntAkb.gif)
