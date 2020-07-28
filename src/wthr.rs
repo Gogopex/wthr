@@ -23,7 +23,8 @@ pub fn format_print(w: Weather, m: &TempUnit) {
 
     let mapping_desc = mapping_desc();
     let description = &w.weather.first().unwrap().description as &str;
-    let emoji = mapping_desc[description];
+
+    let emoji = if mapping_desc.contains_key(description) { mapping_desc[description] } else { "🌎" };
 
     println!(
         "{0} - {1} -- Current temperature is {2}{3}. Feels like {4}{3}!",

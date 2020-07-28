@@ -5,6 +5,7 @@
 - Improve error handling (too many .unwrap())
 - Find way to remember user settings, so that a user can simply type `wthr` once having entered a favority city
 	- e.g: -c (---config) [param=value]
+- Use Sys' country to print out flag if no emoji matches the current weather
 - Print out ASCII art / emojis depending on the weather
 	- this should make use of the information received by the openweather API to have as much variety in the ASCII art as possible
 
