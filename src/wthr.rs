@@ -1,10 +1,10 @@
-mod structs;
+pub(crate) mod structs;
 
+use ansi_term::Colour::{Cyan, Red};
 use chrono::prelude::*;
-use std::collections::{BTreeMap, HashMap};
-use structs::{Forecast, Weather};
-use ansi_term::Colour::{Red, Cyan};
 use inflector::Inflector;
+use std::collections::{BTreeMap, HashMap};
+use structs::{Forecast, TempUnit, Weather};
 
 pub fn process_response(data: &str) -> Result<Weather, Box<dyn std::error::Error>> {
     Ok(serde_json::from_str(&data)?)
@@ -14,8 +14,12 @@ pub fn process_response_forecast(data: &str) -> Result<Forecast, Box<dyn std::er
     Ok(serde_json::from_str(&data)?)
 }
 
-pub fn format_print(w: Weather, m: String) {
-    let symb = if m == "imperial" { "°F" } else { "°C" };
+pub fn format_print(w: Weather, m: &TempUnit) {
+    let symb = match m {
+        TempUnit::Metric => "°C",
+        TempUnit::Imperial => "°F",
+        TempUnit::Kelvin => "°K",
+    };
 
     let mapping_desc = mapping_desc();
     let description = &w.weather.first().unwrap().description as &str;
@@ -31,8 +35,12 @@ pub fn format_print(w: Weather, m: String) {
     )
 }
 
-pub fn format_print_forecast(f: Forecast, m: String) {
-    let symb = if m == "imperial" { "°F" } else { "°C" };
+pub fn format_print_forecast(f: Forecast, m: &TempUnit) {
+    let symb = match m {
+        TempUnit::Metric => "°C",
+        TempUnit::Imperial => "°F",
+        TempUnit::Kelvin => "°K",
+    };
 
     let vec_w = match f.list {
         Some(it) => it,
@@ -62,13 +70,17 @@ pub fn format_print_forecast(f: Forecast, m: String) {
         };
     }
 
-
     let mut output_string = String::new();
     for (k, v) in &forecast_hm {
-        let format = format!("{0}: {1}{2}/{3}{2} ", k, Cyan.paint(v.0.to_string()), symb, Red.paint(v.1.to_string()));
+        let format = format!(
+            "{0}: {1}{2}/{3}{2} ",
+            k,
+            Cyan.paint(v.0.to_string()),
+            symb,
+            Red.paint(v.1.to_string())
+        );
         output_string.push_str(&format);
     }
-
 
     println!("{}", output_string);
 }

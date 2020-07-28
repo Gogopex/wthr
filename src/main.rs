@@ -1,6 +1,7 @@
 mod wthr;
 
 use structopt::StructOpt;
+use wthr::structs::TempUnit;
 use wthr::{format_error, format_print, format_print_forecast};
 
 #[derive(StructOpt, Debug)]
@@ -16,10 +17,12 @@ struct Opts {
         short = "u",
         long = "unit",
         default_value = "metric",
+        case_insensitive = true,
+        possible_values = &TempUnit::variants(),
         help = "Other possible units include <imperial>, <kelvin>"
     )]
-    unit: String,
-    
+    unit: TempUnit,
+
     #[structopt(
         short,
         long,
@@ -37,12 +40,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     if mode == "forecast" {
         match wthr::process_response_forecast(&res) {
-            Ok(f) => format_print_forecast(f, String::from(&cli.unit)),
+            Ok(f) => format_print_forecast(f, &cli.unit),
             Err(e) => format_error(e.to_string()),
         };
     } else {
         match wthr::process_response(&res) {
-            Ok(w) => format_print(w, String::from(&cli.unit)),
+            Ok(w) => format_print(w, &cli.unit),
             Err(e) => format_error(e.to_string()),
         };
     }

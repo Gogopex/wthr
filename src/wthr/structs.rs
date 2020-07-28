@@ -1,4 +1,14 @@
 use serde_derive::{Deserialize, Serialize};
+use structopt::clap::arg_enum;
+
+arg_enum! {
+    #[derive(Debug)]
+    pub enum TempUnit {
+        Metric,
+        Imperial,
+        Kelvin
+    }
+}
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct WeatherForecast {
