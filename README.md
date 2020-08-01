@@ -27,3 +27,27 @@ $ Broken Clouds - 🌥  -- Current temperature is 83°F. Feels like 90°F!
 
 ## Demo
 ![Usage of wthr](https://i.imgur.com/lTntAkb.gif)
+
+## Help
+```bash
+⚡ wthr
+wthr 0.4.0
+A small CLI utility that retrieves and display the weather for a given city using the OpenWeather API
+
+USAGE:
+    wthr [FLAGS] [OPTIONS] <city>
+
+FLAGS:
+    -f, --forecast    Outputs a forecast of the weather for the next 5 days for a given city
+    -h, --help        Prints help information
+    -V, --version     Prints version information
+
+OPTIONS:
+    -u, --unit <unit>    Other possible units include <imperial>, <kelvin> [default: metric]  [possible values: Metric,
+                         Imperial, Kelvin]
+
+ARGS:
+    <city>
+
+Feel free to report any issue you find here: https://github.com/Gogopex/wthr/issues
+```
