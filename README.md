@@ -1,3 +1,5 @@
+![Rust](https://github.com/Gogopex/wthr/workflows/Rust/badge.svg?branch=master&event=push)
+
 # wthr
 A simple Rust command line that displays weather information for a given city. 
 
