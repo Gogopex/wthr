@@ -15,7 +15,7 @@ This will generate a bin file in `target/release/build`
 
 ## Usage
 If you've just ran `cargo build --release`, replace `wthr` by `./target/release/wthr` in the following examples.
-```
+```bash
 # use wthr <city> to print the weather of a city
 $ wthr "new york"
 $ Clear Sky - 😎  -- Current temperature is 29°C. Feels like 33°C!
